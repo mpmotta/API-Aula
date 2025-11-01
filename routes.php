@@ -9,7 +9,7 @@ $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $path = array_values(array_filter(explode('/', trim($uri, '/'))));
 
 // Remove prefixos do caminho, se existirem
-if (isset($path[0]) && $path[0] === 'API-Aula') array_shift($path);
+if (isset($path[0]) && $path[0] === 'API-Games') array_shift($path);
 if (isset($path[0]) && $path[0] === 'api.php') array_shift($path);
 
 $method = $_SERVER['REQUEST_METHOD'];
