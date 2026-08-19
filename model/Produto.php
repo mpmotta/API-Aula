@@ -3,12 +3,12 @@ require_once __DIR__ . '/../config.php';
 
 class Produto {
     private $pdo;
-    private $tabela = 'produtos';
+    private $tabela = 'jogos';
 
     // Propriedades
     private $id;
     private $nome;
-    private $marca;
+    private $estudio;
     private $categoria;
     private $descricao;
     private $valor;
@@ -102,10 +102,10 @@ class Produto {
         return $stmt->fetchAll();
     }
 
-    public function consultaPorMarca($marca) {
-        $sql = "SELECT * FROM $this->tabela WHERE marca = :marca";
+    public function consultaPorEstudio($estudio) {
+        $sql = "SELECT * FROM $this->tabela WHERE estudio LIKE :estudio";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindParam(':marca', $marca, PDO::PARAM_STR);
+        $stmt->bindValue(':estudio', '%' . $estudio . '%', PDO::PARAM_STR);
         $stmt->execute();
         return $stmt->fetchAll();
     }
@@ -151,8 +151,8 @@ class Produto {
     public function setId($id) { $this->id = $id; }
     public function getNome() { return $this->nome; }
     public function setNome($nome) { $this->nome = $nome; }
-    public function getMarca() { return $this->marca; }
-    public function setMarca($marca) { $this->marca = $marca; }
+    public function getEstudio() { return $this->estudio; }
+    public function setEstudio($estudio) { $this->estudio = $estudio; }
     public function getCategoria() { return $this->categoria; }
     public function setCategoria($categoria) { $this->categoria = $categoria; }
     public function getDescricao() { return $this->descricao; }

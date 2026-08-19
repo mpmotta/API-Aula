@@ -40,9 +40,9 @@ class produtoController {
         $produtoModel = new produto();
         return $produtoModel->consultaPorNome($nome);
     }
-    public function filterByMarca($marca) {
+    public function filterByEstudio($estudio) {
         $produtoModel = new produto();
-        return $produtoModel->consultaPorMarca($marca);
+        return $produtoModel->consultaPorEstudio($estudio);
     }
     public function filterByValorMenor($valor) {
         $produtoModel = new produto();
