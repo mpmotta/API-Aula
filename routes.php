@@ -13,18 +13,18 @@ $method = $_SERVER['REQUEST_METHOD'];
 $controller = new produtoController();
 
 $routes = [
-    ['GET',    ['produtos'],                                  'index',                   0],
-    ['GET',    ['produtos', '{id}'],                          'show',                    1],
-    ['POST',   ['produtos'],                                  'store',                   0],
-    ['PUT',    ['produtos', '{id}'],                          'update',                  1],
-    ['DELETE', ['produtos', '{id}'],                          'destroy',                 1],
-    ['GET',    ['produtos', 'categoria', '{categoria}'],      'filterByCategoria',       1],
-    ['GET',    ['produtos', 'nome', '{nome}'],                'filterByNome',            1],
-    ['GET',    ['produtos', 'estudio', '{estudio}'],          'filterByEstudio',         1],
-    ['GET',    ['produtos', 'valorMenor', '{valor}'],         'filterByValorMenor',      1],
-    ['GET',    ['produtos', 'valorMaior', '{valor}'],         'filterByValorMaior',      1],
-    ['GET',    ['produtos', 'valorEntre', '{min}', '{max}'],  'filterByValorEntre',      2],
-    ['GET',    ['produtos', 'disponibilidade', '{disp}'],     'filterByDisponibilidade', 1],
+    ['GET',    ['jogos'],                                  'index',                   0],
+    ['GET',    ['jogos', '{id}'],                          'show',                    1],
+    ['POST',   ['jogos'],                                  'store',                   0],
+    ['PUT',    ['jogos', '{id}'],                          'update',                  1],
+    ['DELETE', ['jogos', '{id}'],                          'destroy',                 1],
+    ['GET',    ['jogos', 'categoria', '{categoria}'],      'filterByCategoria',       1],
+    ['GET',    ['jogos', 'nome', '{nome}'],                'filterByNome',            1],
+    ['GET',    ['jogos', 'estudio', '{estudio}'],          'filterByEstudio',         1],
+    ['GET',    ['jogos', 'valorMenor', '{valor}'],         'filterByValorMenor',      1],
+    ['GET',    ['jogos', 'valorMaior', '{valor}'],         'filterByValorMaior',      1],
+    ['GET',    ['jogos', 'valorEntre', '{min}', '{max}'],  'filterByValorEntre',      2],
+    ['GET',    ['jogos', 'disponibilidade', '{disp}'],     'filterByDisponibilidade', 1],
 ];
 
 function matchRoute($routePattern, $path) {

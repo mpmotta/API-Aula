@@ -1,9 +1,9 @@
 <?php
 $host = 'localhost'; 
 $port = 3306; // porta padrão MySQL
-$db   = 'loja'; // nome 
+$db   = 'games'; // nome 
 $user = 'root'; // usuário 
-$pass = ''; // senha 
+$pass = 'apple'; // senha 
 $charset = 'utf8';
 
 $dsn = "mysql:host=$host;port=$port;dbname=$db;charset=$charset";
