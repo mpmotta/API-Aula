@@ -4,10 +4,17 @@ require_once __DIR__ . '/controller/produtoController.php';
 header('Content-Type: application/json');
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$scriptDir = dirname($_SERVER['SCRIPT_NAME']);
+if ($scriptDir !== '/' && $scriptDir !== '\\') {
+    if (strpos($uri, $scriptDir) === 0) {
+        $uri = substr($uri, strlen($scriptDir));
+    }
+}
 $path = array_values(array_filter(explode('/', trim($uri, '/'))));
 
-if (isset($path[0]) && strtolower($path[0]) === 'api-games') array_shift($path);
-if (isset($path[0]) && strtolower($path[0]) === 'api.php') array_shift($path);
+if (isset($path[0]) && strtolower($path[0]) === 'api.php') {
+    array_shift($path);
+}
 
 $method = $_SERVER['REQUEST_METHOD'];
 $controller = new produtoController();
@@ -21,6 +28,7 @@ $routes = [
     ['GET',    ['jogos', 'categoria', '{categoria}'],      'filterByCategoria',       1],
     ['GET',    ['jogos', 'nome', '{nome}'],                'filterByNome',            1],
     ['GET',    ['jogos', 'estudio', '{estudio}'],          'filterByEstudio',         1],
+    ['GET',    ['jogos', 'idade', '{idade}'],              'filterByIdade',           1],
     ['GET',    ['jogos', 'valorMenor', '{valor}'],         'filterByValorMenor',      1],
     ['GET',    ['jogos', 'valorMaior', '{valor}'],         'filterByValorMaior',      1],
     ['GET',    ['jogos', 'valorEntre', '{min}', '{max}'],  'filterByValorEntre',      2],

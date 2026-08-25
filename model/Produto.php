@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL & ~E_NOTICE);
+
 require_once __DIR__ . '/../config.php';
 
 class Produto {
@@ -8,9 +10,10 @@ class Produto {
     // Propriedades
     private $id;
     private $nome;
+    private $imagem;
     private $estudio;
     private $categoria;
-    private $descricao;
+    private $idade;
     private $valor;
     private $disponibilidade;
     
@@ -35,8 +38,8 @@ class Produto {
 
     // Inserir (sem imagem)
     public function inserir(Produto $produto) {
-        $sql = "INSERT INTO $this->tabela (nome, marca, categoria, descricao, valor, disponibilidade, imagem)
-                VALUES (:nome, :marca, :categoria, :descricao, :valor, :disponibilidade, 'no-image.jpg')";
+        $sql = "INSERT INTO $this->tabela (nome, imagem, estudio, categoria, idade, valor, disponibilidade)
+                VALUES (:nome, :imagem, :estudio, :categoria, :idade, :valor, :disponibilidade)";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(':nome', $produto->getNome(), PDO::PARAM_STR);
         $stmt->bindParam(':marca', $produto->getMarca(), PDO::PARAM_STR);
@@ -47,21 +50,23 @@ class Produto {
         return $stmt->execute();
     }
 
-    // Editar (só dados, sem imagem)
+    // Editar tudo
     public function editar(produto $produto, $id) {
         $sql = "UPDATE $this->tabela SET 
                     nome = :nome, 
-                    marca = :marca, 
+                    imagem = :imagem,
+                    estudio = :estudio, 
                     categoria = :categoria, 
-                    descricao = :descricao, 
+                    idade = :idade, 
                     valor = :valor, 
                     disponibilidade = :disponibilidade
                 WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(':nome', $produto->getNome(), PDO::PARAM_STR);
-        $stmt->bindParam(':marca', $produto->getMarca(), PDO::PARAM_STR);
+        $stmt->bindParam(':imagem', $produto->getImagem(), PDO::PARAM_STR);
+        $stmt->bindParam(':estudio', $produto->getEstudio(), PDO::PARAM_STR);
         $stmt->bindParam(':categoria', $produto->getCategoria(), PDO::PARAM_STR);
-        $stmt->bindParam(':descricao', $produto->getDescricao(), PDO::PARAM_STR);
+        $stmt->bindParam(':idade', $produto->getIdade(), PDO::PARAM_STR);
         $stmt->bindParam(':valor', $produto->getValor());
         $stmt->bindParam(':disponibilidade', $produto->getDisponibilidade(), PDO::PARAM_BOOL);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
@@ -98,6 +103,14 @@ class Produto {
         $sql = "SELECT * FROM $this->tabela WHERE nome LIKE :nome";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':nome', '%' . $nome . '%', PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    public function consultaPorIdade($idade) {
+        $sql = "SELECT * FROM $this->tabela WHERE idade LIKE :idade";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':idade', '%' . $idade . '%', PDO::PARAM_STR);
         $stmt->execute();
         return $stmt->fetchAll();
     }
@@ -151,12 +164,14 @@ class Produto {
     public function setId($id) { $this->id = $id; }
     public function getNome() { return $this->nome; }
     public function setNome($nome) { $this->nome = $nome; }
+    public function getImagem() { return $this->imagem; }
+    public function setImagem($imagem) { $this->imagem = $imagem; }
     public function getEstudio() { return $this->estudio; }
     public function setEstudio($estudio) { $this->estudio = $estudio; }
     public function getCategoria() { return $this->categoria; }
     public function setCategoria($categoria) { $this->categoria = $categoria; }
-    public function getDescricao() { return $this->descricao; }
-    public function setDescricao($descricao) { $this->descricao = $descricao; }
+    public function getIdade() { return $this->idade; }
+    public function setIdade($idade) { $this->idade = $idade; }
     public function getValor() { return $this->valor; }
     public function setValor($valor) { return $this->valor = $valor; }
     public function getDisponibilidade() { return $this->disponibilidade; }

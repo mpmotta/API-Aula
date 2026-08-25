@@ -40,6 +40,10 @@ class produtoController {
         $produtoModel = new produto();
         return $produtoModel->consultaPorNome($nome);
     }
+    public function filterByIdade($idade) {
+        $produtoModel = new produto();
+        return $produtoModel->consultaPorIdade($idade);
+    }
     public function filterByEstudio($estudio) {
         $produtoModel = new produto();
         return $produtoModel->consultaPorEstudio($estudio);
@@ -65,9 +69,10 @@ class produtoController {
     private function popularProduto($dados) {
         $produto = new Produto();
         $produto->setNome($dados['nome'] ?? '');
-        $produto->setMarca($dados['marca'] ?? '');
+        $produto->setImagem($dados['imagem'] ?? '');
+        $produto->setEstudio($dados['studio'] ?? '');
         $produto->setCategoria($dados['categoria'] ?? '');
-        $produto->setDescricao($dados['descricao'] ?? '');
+        $produto->setIdade($dados['idade'] ?? '');
         $produto->setValor($dados['valor'] ?? 0);
         $produto->setDisponibilidade($dados['disponibilidade'] ?? true);
         return $produto;
