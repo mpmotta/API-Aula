@@ -7,7 +7,6 @@ class Produto {
     private $pdo;
     private $tabela = 'jogos';
 
-    // Propriedades
     private $id;
     private $nome;
     private $imagem;
@@ -28,6 +27,7 @@ class Produto {
         $stmt->execute();
         return $stmt->fetchAll();
     }
+    
     public function consultaID($id) {
         $sql = "SELECT * FROM $this->tabela WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
@@ -36,22 +36,21 @@ class Produto {
         return $stmt->fetch();
     }
 
-    // Inserir (sem imagem)
     public function inserir(Produto $produto) {
         $sql = "INSERT INTO $this->tabela (nome, imagem, estudio, categoria, idade, valor, disponibilidade)
                 VALUES (:nome, :imagem, :estudio, :categoria, :idade, :valor, :disponibilidade)";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindParam(':nome', $produto->getNome(), PDO::PARAM_STR);
-        $stmt->bindParam(':marca', $produto->getMarca(), PDO::PARAM_STR);
-        $stmt->bindParam(':categoria', $produto->getCategoria(), PDO::PARAM_STR);
-        $stmt->bindParam(':descricao', $produto->getDescricao(), PDO::PARAM_STR);
-        $stmt->bindParam(':valor', $produto->getValor());
-        $stmt->bindParam(':disponibilidade', $produto->getDisponibilidade(), PDO::PARAM_BOOL);
+        $stmt->bindValue(':nome', $produto->getNome(), PDO::PARAM_STR);
+        $stmt->bindValue(':imagem', $produto->getImagem(), PDO::PARAM_STR);
+        $stmt->bindValue(':estudio', $produto->getEstudio(), PDO::PARAM_STR);
+        $stmt->bindValue(':categoria', $produto->getCategoria(), PDO::PARAM_STR);
+        $stmt->bindValue(':idade', $produto->getIdade(), PDO::PARAM_STR);
+        $stmt->bindValue(':valor', $produto->getValor());
+        $stmt->bindValue(':disponibilidade', $produto->getDisponibilidade(), PDO::PARAM_BOOL);
         return $stmt->execute();
     }
 
-    // Editar tudo
-    public function editar(produto $produto, $id) {
+    public function editar(Produto $produto, $id) {
         $sql = "UPDATE $this->tabela SET 
                     nome = :nome, 
                     imagem = :imagem,
@@ -62,18 +61,17 @@ class Produto {
                     disponibilidade = :disponibilidade
                 WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindParam(':nome', $produto->getNome(), PDO::PARAM_STR);
-        $stmt->bindParam(':imagem', $produto->getImagem(), PDO::PARAM_STR);
-        $stmt->bindParam(':estudio', $produto->getEstudio(), PDO::PARAM_STR);
-        $stmt->bindParam(':categoria', $produto->getCategoria(), PDO::PARAM_STR);
-        $stmt->bindParam(':idade', $produto->getIdade(), PDO::PARAM_STR);
-        $stmt->bindParam(':valor', $produto->getValor());
-        $stmt->bindParam(':disponibilidade', $produto->getDisponibilidade(), PDO::PARAM_BOOL);
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->bindValue(':nome', $produto->getNome(), PDO::PARAM_STR);
+        $stmt->bindValue(':imagem', $produto->getImagem(), PDO::PARAM_STR);
+        $stmt->bindValue(':estudio', $produto->getEstudio(), PDO::PARAM_STR);
+        $stmt->bindValue(':categoria', $produto->getCategoria(), PDO::PARAM_STR);
+        $stmt->bindValue(':idade', $produto->getIdade(), PDO::PARAM_STR);
+        $stmt->bindValue(':valor', $produto->getValor());
+        $stmt->bindValue(':disponibilidade', $produto->getDisponibilidade(), PDO::PARAM_BOOL);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
         return $stmt->execute();
     }
     
-    // Atualizar (só imagem)
     public function atualizarImagem($id, $nomeImagem) {
         $sql = "UPDATE $this->tabela SET imagem = :imagem WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
@@ -88,8 +86,6 @@ class Produto {
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         return $stmt->execute();
     }
-    
-    // --- Métodos de Filtro Completos ---
     
     public function consultaPorCategoria($categoria) {
         $sql = "SELECT * FROM $this->tabela WHERE categoria = :categoria";
@@ -156,10 +152,6 @@ class Produto {
         return $stmt->fetchAll();
     }
     
-    // --- Fim dos Filtros ---
-
-
-    // Getters e setters
     public function getId() { return $this->id; }
     public function setId($id) { $this->id = $id; }
     public function getNome() { return $this->nome; }
